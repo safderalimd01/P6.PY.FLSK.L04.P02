@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request
 
-from resources.utility.config import db_connect, app
+from resources.utility.config import mysql
 from resources.utility.utils import api_success, api_failure, close_connection
 from flask_jwt_extended import jwt_required
 
@@ -11,8 +11,7 @@ class ClsClient(Resource):
     @jwt_required
     def get(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             client_id = int(request.headers.get('client_id'))
@@ -37,8 +36,7 @@ class ClsClient(Resource):
     @jwt_required
     def post(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             _json = request.json
@@ -65,8 +63,7 @@ class ClsClient(Resource):
     @jwt_required
     def put(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             _json = request.json
@@ -100,8 +97,7 @@ class ClsClient(Resource):
     @jwt_required
     def delete(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
             
             _client_id = int(request.headers.get('client_id'))

@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request
 
-from resources.utility.config import db_connect
+from resources.utility.config import mysql
 from resources.utility.utils import api_success, api_failure, close_connection
 from flask_jwt_extended import jwt_required
 
@@ -10,8 +10,7 @@ class ClsProduct(Resource):
     @jwt_required
     def get(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             product_id = int(request.headers.get('product_id'))
@@ -37,8 +36,7 @@ class ClsProduct(Resource):
     @jwt_required
     def post(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             _json = request.json
@@ -61,8 +59,7 @@ class ClsProduct(Resource):
     @jwt_required
     def put(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             _json = request.json
@@ -90,8 +87,7 @@ class ClsProduct(Resource):
     @jwt_required
     def delete(self):
         try:
-            db = db_connect()
-            conn = db.connect()
+            conn = mysql.connect()
             cursor = conn.cursor()
 
             _product_id = int(request.headers.get('product_id'))
